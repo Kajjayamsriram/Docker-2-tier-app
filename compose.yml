@@ -40,7 +40,7 @@ networks:
   appnet:
     driver: overlay
 
-voulmes:
+volumes:
   appvol:
   dbvol:
 

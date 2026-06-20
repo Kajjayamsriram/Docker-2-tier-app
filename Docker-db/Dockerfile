@@ -1,6 +1,6 @@
-FROM mariadb:lts-noble
+FROM mysql:5.7.25
 
 ENV MYSQL_DATABASE="accounts"
-ENV MARIADB_ROOT_PASSWORD_FILE=/run/secrets/db_pass
+ENV MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db_pass
 
 COPY db_backup.sql docker-entrypoint-initdb.d/db_backup.sql

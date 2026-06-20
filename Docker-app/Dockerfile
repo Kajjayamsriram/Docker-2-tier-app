@@ -1,12 +1,7 @@
-FROM 3.9-eclipse-temurin-21-alpine as BUILD
-WorkDIR /app
-COPY ../pom.xml  .
-COPY ../src .
+FROM tomcat:8-jre11
 
-RUN mvn clean package
+RUN rm -rf /usr/local/tomcat/webapps/*
 
-FROM jre21-temurin-jammy
-
-COPY --from=BUILD /app/target/vprofile-v2.war /usr/local/tomcat/webapps/ROOT.war
+COPY target/vprofile-v2.war /usr/local/tomcat/webapps/ROOT.war
 
 CMD ["catalina.sh", "run"]

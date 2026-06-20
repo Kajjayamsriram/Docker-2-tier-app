@@ -17,7 +17,7 @@ services:
     networks:
       - appnet
     volumes: 
-      - appvol
+      - appvol:/usr/local/tomcat
      
   db:
     image: sriramk16/vprofile:db
@@ -33,7 +33,7 @@ services:
     networks:
       - appnet
     volumes:
-      - dbvol
+      - dbvol:/var/lib/mysql
 
 
 networks:

@@ -27,8 +27,8 @@ services:
     deploy:
       replicas: 1     
 
-      secrets:
-        - db_pass
+    secrets:
+      - db_pass
 
     networks:
       - appnet

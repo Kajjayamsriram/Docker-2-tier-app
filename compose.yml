@@ -7,7 +7,7 @@ services:
       - "8080:8080"
 
     deploy:
-      replicas: 3
+      replicas: 2
 
       resources:
         limits:
@@ -21,17 +21,14 @@ services:
      
   db:
     image: sriramk16/vprofile:db
-    #ports:
-    # - "3306:3306"
+    ports:
+     - "3306:3306"
     
     deploy:
-      #replicas: 1
-      
-      environment:
-        MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_rpassword
+      replicas: 1     
 
       secrets:
-        - mysql_rpassword
+        - db_pass
 
     networks:
       - appnet
@@ -48,6 +45,6 @@ voulmes:
   dbvol:
 
 secrets:
-  mysql_rpassword:
-    #file: ./mysql_rpassword.txt
+  db_pass:
+    file: ./mariadb_root_password.txt
     external: true

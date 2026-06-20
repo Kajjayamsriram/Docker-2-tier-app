@@ -47,4 +47,5 @@ volumes:
 secrets:
   db_pass:
     file: ./mariadb_root_password.txt
-    external: true
+    # external: true
+    # use when secret already present/create one manully, docker secret create db_pass mariadb_root_password.txt

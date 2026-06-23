@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}-db
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.backend }}
+  selector:
+    matchLabels:
+      app: {{ .Values.blabels.db }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.blabels.db }}
+    containers:
+      - name: {{ .Values.bcontname.name }}
+        image: {{ .Values.bimage.repository }}:{{ .Values.bimage.tag }}
+
+        ports:
+          - containerPort: {{ .Values.fservice.targetPort }}
+        volumeMounts:        
+{{- toYaml .Values.dvolumeMounts | nindent 10 }}
+        resources:
+{{- toYaml .Values.resources | nindent 10 }}
+volumes: 
+{{- toYaml .Values.dvolumes | nindent 2 }}

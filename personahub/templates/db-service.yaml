@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-db
+spec:
+  type: {{ .Values.dservice.type }}
+  selector:
+    app: {{ .Values.blabels.app }}
+  ports:
+    - port: {{ .Values.dservice.port }}
+      targetPort: {{ .Values.dservice.targetPort }}

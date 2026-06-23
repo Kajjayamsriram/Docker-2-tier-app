@@ -1,0 +1,59 @@
+#Replicas
+frontend: 2
+backend: 1
+
+#Images
+fimage:
+  repository: sriramk16/vprofile
+  pullPolicy: IfNotPresent
+  tag: "app"
+bimage:
+  repository: sriramk16/vprofile
+  pullPolicy: IfNotPresent
+  tag: "db"
+imagePullSecrets: []
+
+#lables
+flabels:
+  app: frontendapp
+  env: dev
+blabels:
+  app: backenddb
+  env: dev
+namespace: vprofiledev
+
+#contnames
+fcontname:
+  name: appcont
+bcontname:
+  name: dbcont
+
+#resources
+resources:
+  requests:
+    cpu: "0.25m"
+    memory: "250Mi"
+  limits:
+    cpu: "0.35m"
+    memory: "350Mi"
+
+#volumes
+dvolumeMounts:
+  - name: vol2
+    mountPath: /var/lib/mysql
+dvolumes:
+  - name: vol2
+    hostpath:
+      path: /opt/db_data
+
+#services
+dservice:
+  type: ClusterIP
+  port: 3306
+  targetPort: 3306
+fservice:
+  type: NodePort
+fports:
+  - port: 8080
+    nodePort: 30000
+    targetPort: 8080

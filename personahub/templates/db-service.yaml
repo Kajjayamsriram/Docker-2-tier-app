@@ -6,7 +6,7 @@ metadata:
 spec:
   type: {{ .Values.dservice.type }}
   selector:
-    app: {{ .Values.blabels.app }}
+    app: {{ .Values.dlabels.app }}
   ports:
     - port: {{ .Values.dservice.port }}
       targetPort: {{ .Values.dservice.targetPort }}

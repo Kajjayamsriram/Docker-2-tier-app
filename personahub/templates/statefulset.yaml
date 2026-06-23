@@ -7,20 +7,27 @@ spec:
   replicas: {{ .Values.backend }}
   selector:
     matchLabels:
-      app: {{ .Values.blabels.db }}
+      app: {{ .Values.dlabels.db }}
   template:
     metadata:
       labels:
-        app: {{ .Values.blabels.db }}
-    containers:
-      - name: {{ .Values.bcontname.name }}
-        image: {{ .Values.bimage.repository }}:{{ .Values.bimage.tag }}
-
-        ports:
-          - containerPort: {{ .Values.fservice.targetPort }}
-        volumeMounts:        
+        app: {{ .Values.dlabels.db }}
+    spec:
+      containers:
+       - name: {{ .Values.dcontname.name }}
+         image: {{ .Values.dimage.repository }}:{{ .Values.dimage.tag }}
+         env:
+           - name: MYSQL_ROOT_PASSWORD
+             valueFrom:
+               secretKeyRef:
+                 name: {{ .Release.Name }}-db
+                 key: rootpass
+                      
+         ports:
+           - containerPort: {{ .Values.dservice.targetPort }}
+         volumeMounts:        
 {{- toYaml .Values.dvolumeMounts | nindent 10 }}
-        resources:
+         resources:
 {{- toYaml .Values.resources | nindent 10 }}
-volumes: 
-{{- toYaml .Values.dvolumes | nindent 2 }}
+      volumes:
+{{- toYaml .Values.dvolumes | nindent 8 }}

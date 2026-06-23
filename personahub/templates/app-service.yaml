@@ -4,7 +4,9 @@ kind: Service
 metadata:
   name: {{ .Release.Name }}-app
 spec:
+  {{- if $.Values.fservice.nodePortEnabled }}
   type: {{ .Values.fservice.type }}
+  {{- end }}
   selector:
     app: {{ .Values.flabels.app }}
   ports:

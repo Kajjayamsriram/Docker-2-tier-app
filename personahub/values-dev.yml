@@ -7,8 +7,8 @@ fimage:
   repository: sriramk16/vprofile
   pullPolicy: IfNotPresent
   tag: "app"
-bimage:
-  repository: sriramk16/vprofile
+dimage:
+  repository: sriramk16/personahub
   pullPolicy: IfNotPresent
   tag: "db"
 imagePullSecrets: []
@@ -17,15 +17,15 @@ imagePullSecrets: []
 flabels:
   app: frontendapp
   env: dev
-blabels:
+dlabels:
   app: backenddb
   env: dev
-namespace: vprofiledev
+namespace: personahubdev
 
 #contnames
 fcontname:
   name: appcont
-bcontname:
+dcontname:
   name: dbcont
 
 #resources
@@ -39,12 +39,15 @@ resources:
 
 #volumes
 dvolumeMounts:
-  - name: vol2
+  - name: dbvol
     mountPath: /var/lib/mysql
 dvolumes:
-  - name: vol2
-    hostpath:
-      path: /opt/db_data
+  - name: dbvol
+    hostPath:
+      path: /opt/data
+
+secret:
+  dbpass: ZGIxMnBhc3MzNAo=
 
 #services
 dservice:
@@ -53,6 +56,7 @@ dservice:
   targetPort: 3306
 fservice:
   type: NodePort
+  nodePortEnabled: true
 fports:
   - port: 8080
     nodePort: 30000

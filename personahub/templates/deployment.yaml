@@ -12,13 +12,14 @@ spec:
     metadata:
       labels:
         app: {{ .Values.flabels.app }}
-    containers:
-      - name: {{ .Values.fcontname.name }}
-        image: {{ .Values.fimage.repository }}:{{ .Values.fimage.tag }}
-        ports:
-          {{- range .Values.fports }}
-          - containerPort: {{ .targetPort }}
-          {{- end }}
+    spec:
+      containers:
+       - name: {{ .Values.fcontname.name }}
+         image: {{ .Values.fimage.repository }}:{{ .Values.fimage.tag }}
+         ports:
+           {{- range .Values.fports }}
+           - containerPort: {{ .targetPort }}
+           {{- end }}
 
-        resources:
+         resources:
 {{- toYaml .Values.resources| nindent 10 }}

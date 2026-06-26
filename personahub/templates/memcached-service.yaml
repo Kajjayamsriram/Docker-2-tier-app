@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.mcservice.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: {{ .Values.mcservice.type }}
+  selector:
+    app: {{ .Values.mclabels.app }}
+  ports:
+    - port: {{ .Values.mcports.port }}
+      targetPort: {{ .Values.mcports.targetPort }}

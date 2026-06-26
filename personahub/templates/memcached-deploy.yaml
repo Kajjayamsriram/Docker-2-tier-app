@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-mq
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.mcreplicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.mclabels.app }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.mclabels.app }}
+    spec:
+      containers:
+       - name: {{ .Values.mccontname.name }}
+         image: {{ .Values.mcimage.repository }}:{{ .Values.mcimage.tag }}
+         ports:
+           - containerPort: {{ .Values.mcports.targetPort }}
+         resources:
+{{- toYaml .Values.resources| nindent 10 }}

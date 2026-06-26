@@ -5,14 +5,12 @@ metadata:
   name: {{ .Release.Name }}-app
   namespace: {{ .Values.namespace }}
 spec:
-  {{- if $.Values.fservice.nodePortEnabled }}
+  {{- if $.Values.fservice.loadBalancerEnabled }}
   type: {{ .Values.fservice.type }}
   {{- end }}
   selector:
     app: {{ .Values.flabels.app }}
   ports:
-{{- range.Values.fports }}
-    - port: {{ .port }}
-      nodePort: {{ .nodePort }}
-      targetPort: {{ .targetPort }}
-{{- end }}
+    - port: {{ .Values.fports.port }}
+      nodePort: {{ .Values.fports.nodePort }}
+      targetPort: {{ .Values.fports.targetPort }}

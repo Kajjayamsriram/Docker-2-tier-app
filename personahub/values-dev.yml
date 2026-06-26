@@ -1,5 +1,5 @@
 #Replicas
-frontend: 2
+frontend: 1
 backend: 1
 
 #Images
@@ -32,10 +32,10 @@ dcontname:
 resources:
   requests:
     cpu: "0.25m"
-    memory: "250Mi"
+    memory: "400Mi"
   limits:
     cpu: "0.35m"
-    memory: "350Mi"
+    memory: "450Mi"
 
 #volumes
 dvolumeMounts:
@@ -55,9 +55,47 @@ dservice:
   port: 3306
   targetPort: 3306
 fservice:
-  type: NodePort
-  nodePortEnabled: true
+  type: LoadBalancer
+  loadBalancerEnabled: true
 fports:
-  - port: 8080
-    nodePort: 30000
-    targetPort: 8080
+   port: 8080
+   nodePort: 30000
+   targetPort: 8080
+
+#midtier
+mreplicas: 1
+mlabels:
+  app: mq
+  env: dev
+mcontname:
+  name: mqcont
+mimage:
+  repository: rabbitmq
+  pullPolicy: IfNotPresent
+  tag: "4.2"
+
+mports:
+  type: ClusterIP
+  port: 15672
+  targetPort: 15672
+mservice:
+  name: vpromq01
+  type: ClusterIP
+
+#memcached
+mcreplicas: 1
+mclabels:
+  app: mc
+mccontname:
+  name: mccont
+mcimage:
+  repository: memcached
+  pullPolicy: IfNotPresent
+  tag: "1.6"
+mcports:
+  type: ClusterIP
+  port: 11211
+  targetPort: 11211
+mcservice:
+  name: vprocache01
+  type: ClusterIP

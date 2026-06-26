@@ -7,11 +7,11 @@ spec:
   replicas: {{ .Values.backend }}
   selector:
     matchLabels:
-      app: {{ .Values.dlabels.db }}
+      app: {{ .Values.dlabels.app }}
   template:
     metadata:
       labels:
-        app: {{ .Values.dlabels.db }}
+        app: {{ .Values.dlabels.app }}
     spec:
       containers:
        - name: {{ .Values.dcontname.name }}

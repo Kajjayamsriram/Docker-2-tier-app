@@ -17,9 +17,7 @@ spec:
        - name: {{ .Values.fcontname.name }}
          image: {{ .Values.fimage.repository }}:{{ .Values.fimage.tag }}
          ports:
-           {{- range .Values.fports }}
-           - containerPort: {{ .targetPort }}
-           {{- end }}
+           - containerPort: {{ .Values.fports.targetPort }}
 
          resources:
 {{- toYaml .Values.resources| nindent 10 }}

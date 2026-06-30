@@ -18,5 +18,3 @@ spec:
          image: {{ .Values.mimage.repository }}:{{ .Values.mimage.tag }}
          ports:
            - containerPort: {{ .Values.mports.targetPort }}
-         resources:
-{{- toYaml .Values.resources| nindent 10 }}

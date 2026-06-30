@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-mq
+  name: {{ .Release.Name }}-mc
   namespace: {{ .Values.namespace }}
 spec:
   replicas: {{ .Values.mcreplicas }}
@@ -18,5 +18,3 @@ spec:
          image: {{ .Values.mcimage.repository }}:{{ .Values.mcimage.tag }}
          ports:
            - containerPort: {{ .Values.mcports.targetPort }}
-         resources:
-{{- toYaml .Values.resources| nindent 10 }}

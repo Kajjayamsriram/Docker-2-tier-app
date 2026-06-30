@@ -31,11 +31,11 @@ dcontname:
 #resources
 resources:
   requests:
-    cpu: "0.25m"
-    memory: "400Mi"
-  limits:
     cpu: "0.35m"
     memory: "450Mi"
+  limits:
+    cpu: "0.45m"
+    memory: "500Mi"
 
 #volumes
 dvolumeMounts:

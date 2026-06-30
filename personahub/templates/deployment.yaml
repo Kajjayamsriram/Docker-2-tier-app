@@ -13,11 +13,22 @@ spec:
       labels:
         app: {{ .Values.flabels.app }}
     spec:
+      initContainers:
+      - name: wait-for-dependencies
+        image: busybox:1.36
+        command:
+         - sh
+         - -c
+         - |
+           echo "Waiting for MySQL..."
+           until nc -z {{ .Release.Name }}-db 3306; do sleep 5; done
+
+           echo "Waiting for Memcached..."
+           until nc -z {{ .Values.mcservice.name }} 11211; do sleep 5; done
+
       containers:
        - name: {{ .Values.fcontname.name }}
          image: {{ .Values.fimage.repository }}:{{ .Values.fimage.tag }}
          ports:
            - containerPort: {{ .Values.fports.targetPort }}
 
-         resources:
-{{- toYaml .Values.resources| nindent 10 }}

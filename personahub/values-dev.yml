@@ -29,13 +29,39 @@ dcontname:
   name: dbcont
 
 #resources
-resources:
+appresources:
   requests:
-    cpu: "0.35m"
-    memory: "450Mi"
+    cpu: "200m"
+    memory: "512Mi"
   limits:
-    cpu: "0.45m"
-    memory: "500Mi"
+    cpu: "500m"
+    memory: "1Gi"
+#{{- toYaml .Values.appresources | nindent 11 }}
+
+dbresources:
+  requests:
+    cpu: "200m"
+    memory: "256Mi"
+  limits:
+    cpu: "500m"
+    memory: "512Mi"
+
+
+mqresources:
+  requests:
+    cpu: "100m"
+    memory: "256Mi"
+  limits:
+    cpu: "250m"
+    memory: "512Mi"
+
+mcresources:
+  requests:
+    cpu: "50m"
+    memory: "64Mi"
+  limits:
+    cpu: "100m"
+    memory: "128Mi"
 
 #volumes
 dvolumeMounts:
@@ -47,7 +73,7 @@ dvolumes:
       path: /opt/data
 
 secret:
-  dbpass: ZGIxMnBhc3MzNAo=
+  dbpass: ZGIxMnBhc3MzNA==
 
 #services
 dservice:
@@ -76,8 +102,9 @@ mimage:
 
 mports:
   type: ClusterIP
-  port: 15672
-  targetPort: 15672
+  port: 5672
+  targetPort: 5672
+
 mservice:
   name: vpromq01
   type: ClusterIP

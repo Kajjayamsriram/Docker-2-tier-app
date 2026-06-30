@@ -22,6 +22,9 @@ spec:
          - |
            echo "Waiting for MySQL..."
            until nc -z {{ .Release.Name }}-db 3306; do sleep 5; done
+           
+           echo "Waiting for RabbitMq..."
+           until nc -z {{ .Values.mservice.name }} 5672; do sleep 5; done
 
            echo "Waiting for Memcached..."
            until nc -z {{ .Values.mcservice.name }} 11211; do sleep 5; done
@@ -31,4 +34,5 @@ spec:
          image: {{ .Values.fimage.repository }}:{{ .Values.fimage.tag }}
          ports:
            - containerPort: {{ .Values.fports.targetPort }}
-
+         resources:
+{{- toYaml .Values.appresources | nindent 11 }}

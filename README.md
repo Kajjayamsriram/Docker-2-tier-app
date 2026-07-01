@@ -1,5 +1,9 @@
-# Docker-2-tier-app
-Docker 2 tier application deployed in swam cluster
+# Docker 2 tier application 
+
+#Docker stack to run the appliaction on swarm
+```
+docker stack deploy -c compose.yaml personahub 
+```
 
 #Using Helm chart to install the application in k8s
 ```

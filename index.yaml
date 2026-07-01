@@ -3,12 +3,12 @@ entries:
   personahub:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2026-07-01T04:28:43.496327119Z"
+    created: "2026-07-01T06:08:48.686331626Z"
     description: A Helm chart for Kubernetes
-    digest: eea100cfae5f30e8204a3a7ed464ae4442005b910b57a7b7f4374de52c5cba53
+    digest: d29fb65310611ef589c802b90005690a982e1935847ab5d744c393535f530458
     name: personahub
     type: application
     urls:
     - personahub-0.1.0.tgz
     version: 0.1.0
-generated: "2026-07-01T04:28:43.495871994Z"
+generated: "2026-07-01T06:08:48.685489348Z"

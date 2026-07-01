@@ -13,3 +13,9 @@ helm repo list
 helm repo update
 helm install personahub personahub -n personahubdev
 ```
+#Using ArgoCd to deploy application in k8s
+```
+kubectl apply -f personahub-argocd.yaml -n argocd
+kubectl delete app personahub -n argocd
+#Note this needs argocd installation
+```

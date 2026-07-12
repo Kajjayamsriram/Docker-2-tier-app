@@ -4,11 +4,11 @@ backend: 1
 
 #Images
 fimage:
-  repository: sriramk16/vprofile
+   repository: sriramk16/dockerwebapp:app
   pullPolicy: IfNotPresent
   tag: "app"
 dimage:
-  repository1: sriramk16/personahub
+   repository1: sriramk16/dockerwebapp:db
   pullPolicy: IfNotPresent
   tag: "db"
 imagePullSecrets: []
@@ -96,7 +96,7 @@ mlabels:
 mcontname:
   name: mqcont
 mimage:
-  repository: rabbitmq
+   repository: sriramk16/dockerwebapp:app
   pullPolicy: IfNotPresent
   tag: "4.2"
 
@@ -116,7 +116,7 @@ mclabels:
 mccontname:
   name: mccont
 mcimage:
-  repository: memcached
+   repository: sriramk16/dockerwebapp:app
   pullPolicy: IfNotPresent
   tag: "1.6"
 mcports:

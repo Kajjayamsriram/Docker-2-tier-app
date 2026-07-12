@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
        - name: {{ .Values.dcontname.name }}
-         image: {{ .Values.dimage.repository }}:{{ .Values.dimage.tag }}
+         image: {{ .Values.dimage.repository1 }}:{{ .Values.dimage.tag }}
          env:
            - name: MYSQL_ROOT_PASSWORD
              valueFrom:

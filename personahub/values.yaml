@@ -8,7 +8,7 @@ fimage:
   pullPolicy: IfNotPresent
   tag: "app"
 dimage:
-  repository: sriramk16/personahub
+  repository2: sriramk16/personahub
   pullPolicy: IfNotPresent
   tag: "db"
 imagePullSecrets: []

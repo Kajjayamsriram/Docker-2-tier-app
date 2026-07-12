@@ -1,0 +1,22 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('code') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Kajjayamsriram/Docker-2-tier-app.git'
+            }
+        }
+        stage('Deploy'){
+            steps{
+                withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: 'srieks', contextName: '', credentialsId: 'aws-secret', namespace: 'personahubdev', serverUrl: 'https://01E02BF3E05F9BB5C8F96D399E1880CC.gr7.us-east-2.eks.amazonaws.com']]) {
+                    sh '''
+                    helm repo add personahub https://kajjayamsriram.github.io/Docker-2-tier-app/
+                    helm install personahub personahub -n personahubdev
+                    '''
+                }
+            }
+        }
+    }
+}
+

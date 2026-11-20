@@ -1,0 +1,56 @@
+# Maven
+# Build your Java project and run tests with Apache Maven.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/java
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: Maven@4
+  inputs:
+    mavenPomFile: 'pom.xml'
+    mavenOptions: '-Xmx3072m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.11'
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    goals: 'package'
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)/target'
+    Contents: '**'
+    TargetFolder: '$(Build.SourcesDirectory)/Docker-app/target'
+
+- task: Docker@2
+  inputs:
+    containerRegistry: 'acr-connection'
+    repository: 'app'
+    command: 'buildAndPush'
+    Dockerfile: '**/Docker-app/Dockerfile'
+
+- task: Docker@2
+  inputs:
+    containerRegistry: 'acr-connection'
+    repository: 'db'
+    command: 'buildAndPush'
+    Dockerfile: '**/Docker-db/Dockerfile'
+
+- task: KubeloginInstaller@0
+  inputs:
+    kubeloginVersion: 'latest'
+
+- task: KubernetesManifest@1
+  inputs:
+    action: 'deploy'
+    connectionType: 'azureResourceManager'
+    azureSubscriptionConnection: 'arm-connection'
+    azureResourceGroup: 'aks-rg-dev'
+    kubernetesCluster: 'aks-cluster-dev'
+    namespace: 'default'
+    manifests: 'manifests/*.yaml'
